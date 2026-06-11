@@ -24,18 +24,42 @@
                         @endif
                         
                         <div class="p-6">
-                            <h3 class="text-xl font-bold text-gray-900 mb-2">{{ $item->nama_kos }}</h3>
-                            <p class="text-blue-600 font-semibold mb-4">Rp {{ number_format($item->harga_per_bulan, 0, ',', '.') }} / bulan</p>
-                            
-                            <p class="text-gray-700 text-sm mb-4 line-clamp-2" title="{{ $item->deskripsi }}">
-                                {{ $item->deskripsi }}
-                            </p>
-                            
-                            <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
-                                <span class="text-xs bg-green-100 text-green-800 py-1 px-2 rounded">{{ $item->fasilitas }}</span>
-                                <span class="text-xs text-gray-500">{{ $item->alamat }}</span>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">{{ $item->nama_kos }}</h3>
+                        <p class="text-blue-600 font-semibold mb-4">Rp {{ number_format($item->harga_per_bulan, 0, ',', '.') }} / bulan</p>
+                        
+                        <p class="text-gray-700 text-sm mb-4 line-clamp-2" title="{{ $item->deskripsi }}">
+                            {{ $item->deskripsi }}
+                        </p>
+
+                        <div class="space-y-2 mb-4">
+                            <div class="flex items-center text-sm text-gray-600">
+                                <span class="font-semibold mr-2">Fasilitas:</span>
+                                <span class="text-xs bg-green-100 text-green-800 py-0.5 px-2 rounded">{{ $item->fasilitas }}</span>
+                            </div>
+                            <div class="text-sm text-gray-600">
+                                <span class="font-semibold">Alamat:</span> {{ $item->alamat }}
+                            </div>
+                            <div class="text-sm text-gray-600 flex items-center">
+                                <span class="font-semibold mr-1">Hubungi:</span> 
+                                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $item->kontak_pemilik) }}" target="_blank" class="text-green-600 hover:underline font-medium flex items-center">
+                                    🟢 {{ $item->kontak_pemilik }}
+                                </a>
                             </div>
                         </div>
+                        
+                        <div class="mt-4 pt-4 border-t border-gray-100 flex justify-end space-x-3">
+                            <a href="{{ route('kos.edit', $item->id) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-1 px-4 rounded shadow transition duration-200">
+                                Edit
+                            </a>
+                            <form action="{{ route('kos.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus kos ini?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold py-1 px-4 rounded shadow transition duration-200">
+                                    Hapus
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                     </div>
                 @empty
                     <div class="col-span-full bg-white p-8 rounded-lg shadow-sm text-center">

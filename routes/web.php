@@ -25,5 +25,8 @@ use App\Http\Controllers\KosController;
 Route::middleware(['auth'])->group(function () {
     Route::get('/kos/tambah', [KosController::class, 'create'])->name('kos.create');
     Route::post('/kos/simpan', [KosController::class, 'store'])->name('kos.store');
+    Route::get('/kos/{kos}/edit', [KosController::class, 'edit'])->name('kos.edit');
+    Route::put('/kos/{kos}', [KosController::class, 'update'])->name('kos.update');
+    Route::delete('/kos/{kos}', [KosController::class, 'destroy'])->name('kos.destroy');
 });
 require __DIR__.'/auth.php';

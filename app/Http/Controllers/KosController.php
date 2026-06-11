@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class KosController extends Controller
 {
@@ -44,4 +45,65 @@ class KosController extends Controller
 
     return redirect()->route('dashboard')->with('success', 'Kos berhasil ditambahkan!');
 }
+    // 3. Menampilkan halaman form edit
+    public function edit(Kos $kos)
+    {
+        // Keamanan: Pastikan hanya pemilik asli yang bisa edit
+        if ($kos->user_id !== auth()->id()) {
+            abort(403, 'Akses Ditolak');
+        }
+        return view('kos.edit', compact('kos'));
+    }
+
+    // 4. Menyimpan perubahan data (Update)
+    public function update(Request $request, Kos $kos)
+    {
+        if ($kos->user_id !== auth()->id()) {
+            abort(403, 'Akses Ditolak');
+        }
+
+        $request->validate([
+            'nama_kos' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
+            'harga_per_bulan' => 'required|integer',
+            'alamat' => 'required|string',
+            'fasilitas' => 'required|string',
+            'kontak_pemilik' => 'required|string',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        $data = $request->all();
+
+        // Jika user mengupload foto baru
+        if ($request->hasFile('foto')) {
+            // Hapus foto lama dari laptop
+            if ($kos->foto) {
+                Storage::disk('public')->delete($kos->foto);
+            }
+            // Simpan foto baru
+            $data['foto'] = $request->file('foto')->store('foto-kos', 'public');
+        }
+
+        $kos->update($data);
+
+        return redirect()->route('dashboard')->with('success', 'Data kos berhasil diubah!');
+    }
+
+    // 5. Menghapus data kos (Delete)
+    public function destroy(Kos $kos)
+    {
+        if ($kos->user_id !== auth()->id()) {
+            abort(403, 'Akses Ditolak');
+        }
+
+        // Hapus file foto dari laptop
+        if ($kos->foto) {
+            Storage::disk('public')->delete($kos->foto);
+        }
+
+        // Hapus data dari database
+        $kos->delete();
+
+        return redirect()->route('dashboard')->with('success', 'Data kos berhasil dihapus!');
+    }
 }
