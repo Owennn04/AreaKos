@@ -8,7 +8,9 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $kos = \App\Models\Kos::where('user_id', auth()->id())->latest()->get();
+    
+    return view('dashboard', compact('kos'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -17,4 +19,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+use App\Http\Controllers\KosController;
+
+// Rute yang hanya bisa diakses jika user sudah login
+Route::middleware(['auth'])->group(function () {
+    Route::get('/kos/tambah', [KosController::class, 'create'])->name('kos.create');
+    Route::post('/kos/simpan', [KosController::class, 'store'])->name('kos.store');
+});
 require __DIR__.'/auth.php';
