@@ -29,4 +29,12 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // Hubungan (Relasi): Satu user bisa memiliki banyak kos
+public function kos()
+    {
+        return $this->hasMany(Kos::class);
+    }
 }
+
+
