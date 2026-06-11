@@ -23,6 +23,7 @@ class Kos extends Model
         'fasilitas',
         'kontak_pemilik',
         'foto',
+        'link_gmaps',
     ];
 
     // Hubungan (Relasi): Setiap kos dimiliki oleh satu User (Pemilik)

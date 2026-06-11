@@ -70,6 +70,7 @@ class KosController extends Controller
             'fasilitas' => 'required|string',
             'kontak_pemilik' => 'required|string',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'link_gmaps' => 'nullable|url', 
         ]);
 
         $data = $request->all();

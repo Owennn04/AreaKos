@@ -43,6 +43,11 @@
                     </div>
 
                     <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Link Google Maps (Opsional)</label>
+                        <input type="url" name="link_gmaps" placeholder="Contoh: https://maps.app.goo.gl/..." class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+
+                    <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2">Foto Kos</label>
                         <input type="file" name="foto" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                         <p class="text-xs text-gray-500 mt-1">*Format: jpg, jpeg, png (Max 2MB)</p>

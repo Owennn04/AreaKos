@@ -2,9 +2,12 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Models\Kos;
 
 Route::get('/', function () {
-    return view('welcome');
+    $kos = Kos::latest()->get();
+    
+    return view('welcome', compact('kos'));
 });
 
 Route::get('/dashboard', function () {

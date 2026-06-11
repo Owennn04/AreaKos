@@ -57,6 +57,11 @@
                         <textarea name="deskripsi" rows="4" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>{{ old('deskripsi', $kos->deskripsi) }}</textarea>
                     </div>
 
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Link Google Maps</label>
+                        <input type="url" name="link_gmaps" value="{{ old('link_gmaps', $kos->link_gmaps) }}" placeholder="Contoh: https://maps.app.goo.gl/..." class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+
                     <div class="flex items-center justify-end space-x-3">
                         <a href="{{ route('dashboard') }}" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition duration-200">
                             Batal
